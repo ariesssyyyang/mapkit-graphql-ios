@@ -27,4 +27,3 @@ class ViewController: UIViewController {
         mapView.setRegion(coordinateRegion, animated: true)
     }
 }
-
