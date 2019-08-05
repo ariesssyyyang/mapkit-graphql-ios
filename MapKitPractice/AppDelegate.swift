@@ -7,6 +7,26 @@
 //
 
 import UIKit
+import Apollo
+
+let apollo: ApolloClient = {
+    let configuration = URLSessionConfiguration.default
+    let path = Bundle.main.path(forResource: "Config", ofType: "plist")!
+    let configData = FileManager.default.contents(atPath: path)!
+    let configDictionary = try! PropertyListSerialization.propertyList(
+        from: configData,
+        options: .mutableContainersAndLeaves,
+        format: nil
+    ) as! [String: String]
+    configuration.httpAdditionalHeaders = [
+        "Authorization": "Bearer \(String(describing: configDictionary["API_KEY"]!))",
+        "Accept-Language": "zh_TW"
+    ]
+    let networkTransport = HTTPNetworkTransport(
+        url: URL(string: "https://api.yelp.com/v3/graphql")!,
+        configuration: configuration)
+    return ApolloClient(networkTransport: networkTransport)
+}()
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        apollo.cacheKeyForObject = { $0["id"] }
         return true
     }
 
