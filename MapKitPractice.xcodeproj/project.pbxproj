@@ -14,6 +14,8 @@
 		7F4B832022F6E9FE00F1CEC6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F4B831F22F6E9FE00F1CEC6 /* Assets.xcassets */; };
 		7F4B832322F6E9FE00F1CEC6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F4B832122F6E9FE00F1CEC6 /* LaunchScreen.storyboard */; };
 		7F4B832C22F881C300F1CEC6 /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7F4B832B22F881C300F1CEC6 /* Config.plist */; };
+		7F4B832E22F8845100F1CEC6 /* nearby.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 7F4B832D22F8845100F1CEC6 /* nearby.graphql */; };
+		7F4B833022F8899200F1CEC6 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4B832F22F8899200F1CEC6 /* API.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 		7F4B832222F6E9FE00F1CEC6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7F4B832422F6E9FE00F1CEC6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7F4B832B22F881C300F1CEC6 /* Config.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
+		7F4B832D22F8845100F1CEC6 /* nearby.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = nearby.graphql; sourceTree = "<group>"; };
+		7F4B832F22F8899200F1CEC6 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		CBBFD5554EE2404A9C2A4581 /* Pods-MapKitPractice.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MapKitPractice.release.xcconfig"; path = "Pods/Target Support Files/Pods-MapKitPractice/Pods-MapKitPractice.release.xcconfig"; sourceTree = "<group>"; };
 		FEAAAE606371A3403718CC57 /* Pods-MapKitPractice.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MapKitPractice.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MapKitPractice/Pods-MapKitPractice.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -83,6 +87,8 @@
 				7F4B831822F6E9FC00F1CEC6 /* AppDelegate.swift */,
 				7F4B831A22F6E9FC00F1CEC6 /* ViewController.swift */,
 				7F4B831C22F6E9FC00F1CEC6 /* Main.storyboard */,
+				7F4B832D22F8845100F1CEC6 /* nearby.graphql */,
+				7F4B832F22F8899200F1CEC6 /* API.swift */,
 				7F4B831F22F6E9FE00F1CEC6 /* Assets.xcassets */,
 				7F4B832122F6E9FE00F1CEC6 /* LaunchScreen.storyboard */,
 				7F4B832422F6E9FE00F1CEC6 /* Info.plist */,
@@ -153,6 +159,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F4B832C22F881C300F1CEC6 /* Config.plist in Resources */,
+				7F4B832E22F8845100F1CEC6 /* nearby.graphql in Resources */,
 				7F4B832322F6E9FE00F1CEC6 /* LaunchScreen.storyboard in Resources */,
 				7F4B832022F6E9FE00F1CEC6 /* Assets.xcassets in Resources */,
 				7F4B831E22F6E9FC00F1CEC6 /* Main.storyboard in Resources */,
@@ -232,6 +239,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F4B831B22F6E9FC00F1CEC6 /* ViewController.swift in Sources */,
+				7F4B833022F8899200F1CEC6 /* API.swift in Sources */,
 				7F4B831922F6E9FC00F1CEC6 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -1,0 +1,14 @@
+query Nearby($latitude: Float!, $longitude: Float!) {
+  search(latitude: $latitude, longitude: $longitude) {
+    business {
+            name
+            id
+            alias
+            rating
+            url
+            location {
+                address1
+            }
+        }
+  }
+}
