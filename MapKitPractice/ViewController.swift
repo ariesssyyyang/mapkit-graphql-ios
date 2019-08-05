@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import Apollo
 
 class ViewController: UIViewController {
 
@@ -22,8 +23,26 @@ class ViewController: UIViewController {
         centerMapOnLocation(location: initialLocation)
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        getNearby()
+    }
+
     func centerMapOnLocation(location: CLLocation) {
         let coordinateRegion = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: regionRedius, longitudinalMeters: regionRedius)
         mapView.setRegion(coordinateRegion, animated: true)
+    }
+
+    var watcher: GraphQLQueryWatcher<NearbyQuery>?
+
+    func getNearby() {
+        let coordinate = initialLocation.coordinate
+        watcher = apollo.watch(query: NearbyQuery(latitude: coordinate.latitude, longitude: coordinate.longitude), resultHandler: { (result, error) in
+            if let queryData = result?.data {
+                // Parse the data
+            } else if let queryError = error {
+                // Handle error
+            }
+        })
     }
 }
