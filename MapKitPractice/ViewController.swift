@@ -38,11 +38,28 @@ class ViewController: UIViewController {
     func getNearby() {
         let coordinate = initialLocation.coordinate
         watcher = apollo.watch(query: NearbyQuery(latitude: coordinate.latitude, longitude: coordinate.longitude), resultHandler: { (result, error) in
-            if let queryData = result?.data {
-                // Parse the data
-            } else if let queryError = error {
-                // Handle error
+            switch self.mapResponseToResult(response: result, error: error) {
+            case .success(let restaurants):
+                print(restaurants)
+            case .failure(let error):
+                print(error)
             }
         })
+    }
+
+    private func mapResponseToResult(response: GraphQLResult<NearbyQuery.Data>?, error: Error?) -> Result<Array<Restaurant>> {
+        if let error = error {
+            return .failure(error)
+        }
+        guard let businessList = response?.data?.search?.business else {
+            return .failure(ResponseError.parse)
+        }
+        let restaurants = businessList.enumerated().map { (index, business) -> Restaurant in
+            let name = business?.name ?? "n/a"
+            let id = business?.id ?? "id\(index)"
+            let address = business?.location?.address1 ?? "n/a"
+            return Restaurant(id: id, name: name, address: address)
+        }
+        return .success(restaurants)
     }
 }
