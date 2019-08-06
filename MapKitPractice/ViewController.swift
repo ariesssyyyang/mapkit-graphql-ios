@@ -16,6 +16,11 @@ class ViewController: UIViewController {
 
     let initialLocation = CLLocation(latitude: 25.0478, longitude: 121.5318)
     let regionRedius: CLLocationDistance = 1000
+    var restaurantList: Array<Restaurant> = [] {
+        didSet {
+            mapView.addAnnotations(restaurantList)
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,6 +46,7 @@ class ViewController: UIViewController {
             switch self.mapResponseToResult(response: result, error: error) {
             case .success(let restaurants):
                 print(restaurants)
+                self.restaurantList = restaurants
             case .failure(let error):
                 print(error)
             }
