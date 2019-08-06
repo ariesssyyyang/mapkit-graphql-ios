@@ -29,5 +29,6 @@ class Restaurant: NSObject, MKAnnotation {
         } else {
             self.coordinate = CLLocationCoordinate2D(latitude: 0, longitude: 0)
         }
+        super.init()
     }
 }
