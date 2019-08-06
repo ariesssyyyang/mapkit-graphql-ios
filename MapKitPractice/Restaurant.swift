@@ -15,15 +15,17 @@ class Restaurant: NSObject, MKAnnotation {
     let name: String
     let address: String
     var coordinate: CLLocationCoordinate2D
-    var title: String?
-    var subtitle: String?
+    var title: String? {
+        return name
+    }
+    var subtitle: String? {
+        return address
+    }
 
     init(id: String, name: String, address: String, latitude: Double? = nil, longitude: Double? = nil) {
         self.id = id
         self.name = name
         self.address = address
-        self.title = name
-        self.subtitle = address
         if let lat = latitude, let long = longitude {
             self.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
         } else {
