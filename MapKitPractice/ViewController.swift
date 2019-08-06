@@ -58,7 +58,14 @@ class ViewController: UIViewController {
             let name = business?.name ?? "n/a"
             let id = business?.id ?? "id\(index)"
             let address = business?.location?.address1 ?? "n/a"
-            return Restaurant(id: id, name: name, address: address)
+            let coordinate = business?.coordinates
+            return Restaurant(
+                id: id,
+                name: name,
+                address: address,
+                latitude: coordinate?.latitude,
+                longitude: coordinate?.longitude
+            )
         }
         return .success(restaurants)
     }
