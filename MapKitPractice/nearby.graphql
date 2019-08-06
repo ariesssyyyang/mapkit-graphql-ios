@@ -9,6 +9,10 @@ query Nearby($latitude: Float!, $longitude: Float!) {
             location {
                 address1
             }
+            coordinates {
+                latitude
+                longitude
+            }
         }
   }
 }

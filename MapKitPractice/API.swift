@@ -4,7 +4,7 @@ import Apollo
 
 public final class NearbyQuery: GraphQLQuery {
   public let operationDefinition =
-    "query Nearby($latitude: Float!, $longitude: Float!) {\n  search(latitude: $latitude, longitude: $longitude) {\n    __typename\n    business {\n      __typename\n      name\n      id\n      alias\n      rating\n      url\n      location {\n        __typename\n        address1\n      }\n    }\n  }\n}"
+    "query Nearby($latitude: Float!, $longitude: Float!) {\n  search(latitude: $latitude, longitude: $longitude) {\n    __typename\n    business {\n      __typename\n      name\n      id\n      alias\n      rating\n      url\n      location {\n        __typename\n        address1\n      }\n      coordinates {\n        __typename\n        latitude\n        longitude\n      }\n    }\n  }\n}"
 
   public var latitude: Double
   public var longitude: Double
@@ -93,6 +93,7 @@ public final class NearbyQuery: GraphQLQuery {
           GraphQLField("rating", type: .scalar(Double.self)),
           GraphQLField("url", type: .scalar(String.self)),
           GraphQLField("location", type: .object(Location.selections)),
+          GraphQLField("coordinates", type: .object(Coordinate.selections)),
         ]
 
         public private(set) var resultMap: ResultMap
@@ -101,8 +102,8 @@ public final class NearbyQuery: GraphQLQuery {
           self.resultMap = unsafeResultMap
         }
 
-        public init(name: String? = nil, id: String? = nil, alias: String? = nil, rating: Double? = nil, url: String? = nil, location: Location? = nil) {
-          self.init(unsafeResultMap: ["__typename": "Business", "name": name, "id": id, "alias": alias, "rating": rating, "url": url, "location": location.flatMap { (value: Location) -> ResultMap in value.resultMap }])
+        public init(name: String? = nil, id: String? = nil, alias: String? = nil, rating: Double? = nil, url: String? = nil, location: Location? = nil, coordinates: Coordinate? = nil) {
+          self.init(unsafeResultMap: ["__typename": "Business", "name": name, "id": id, "alias": alias, "rating": rating, "url": url, "location": location.flatMap { (value: Location) -> ResultMap in value.resultMap }, "coordinates": coordinates.flatMap { (value: Coordinate) -> ResultMap in value.resultMap }])
         }
 
         public var __typename: String {
@@ -174,6 +175,16 @@ public final class NearbyQuery: GraphQLQuery {
           }
         }
 
+        /// The coordinates of this business.
+        public var coordinates: Coordinate? {
+          get {
+            return (resultMap["coordinates"] as? ResultMap).flatMap { Coordinate(unsafeResultMap: $0) }
+          }
+          set {
+            resultMap.updateValue(newValue?.resultMap, forKey: "coordinates")
+          }
+        }
+
         public struct Location: GraphQLSelectionSet {
           public static let possibleTypes = ["Location"]
 
@@ -208,6 +219,55 @@ public final class NearbyQuery: GraphQLQuery {
             }
             set {
               resultMap.updateValue(newValue, forKey: "address1")
+            }
+          }
+        }
+
+        public struct Coordinate: GraphQLSelectionSet {
+          public static let possibleTypes = ["Coordinates"]
+
+          public static let selections: [GraphQLSelection] = [
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("latitude", type: .scalar(Double.self)),
+            GraphQLField("longitude", type: .scalar(Double.self)),
+          ]
+
+          public private(set) var resultMap: ResultMap
+
+          public init(unsafeResultMap: ResultMap) {
+            self.resultMap = unsafeResultMap
+          }
+
+          public init(latitude: Double? = nil, longitude: Double? = nil) {
+            self.init(unsafeResultMap: ["__typename": "Coordinates", "latitude": latitude, "longitude": longitude])
+          }
+
+          public var __typename: String {
+            get {
+              return resultMap["__typename"]! as! String
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "__typename")
+            }
+          }
+
+          /// The latitude of this business.
+          public var latitude: Double? {
+            get {
+              return resultMap["latitude"] as? Double
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "latitude")
+            }
+          }
+
+          /// The longitude of this business.
+          public var longitude: Double? {
+            get {
+              return resultMap["longitude"] as? Double
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "longitude")
             }
           }
         }
