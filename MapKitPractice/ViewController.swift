@@ -14,7 +14,13 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var mapView: MKMapView!
 
-    let initialLocation = CLLocation(latitude: 25.0478, longitude: 121.5318)
+    let locationManager = CLLocationManager()
+    var userLocation: CLLocation? {
+        didSet {
+            getNearby()
+        }
+    }
+    private let defaultLocation = CLLocation(latitude: 25.0478, longitude: 121.5318)
     let regionRedius: CLLocationDistance = 1000
     var restaurantList: Array<Restaurant> = [] {
         didSet {
@@ -26,7 +32,12 @@ class ViewController: UIViewController {
         super.viewDidLoad()
 
         mapView.delegate = self
-        centerMapOnLocation(location: initialLocation)
+
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+        centerMapOnLocation(location: userLocation ?? defaultLocation)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -42,7 +53,7 @@ class ViewController: UIViewController {
     var watcher: GraphQLQueryWatcher<NearbyQuery>?
 
     func getNearby() {
-        let coordinate = initialLocation.coordinate
+        let coordinate = userLocation?.coordinate ?? defaultLocation.coordinate
         watcher = apollo.watch(query: NearbyQuery(latitude: coordinate.latitude, longitude: coordinate.longitude), resultHandler: { (result, error) in
             switch self.mapResponseToResult(response: result, error: error) {
             case .success(let restaurants):
@@ -96,5 +107,12 @@ extension ViewController: MKMapViewDelegate {
         }
 
         return view
+    }
+}
+
+extension ViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let location = manager.location else { return }
+        userLocation = location
     }
 }
