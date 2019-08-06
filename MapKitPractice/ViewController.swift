@@ -57,12 +57,13 @@ class ViewController: UIViewController {
         let restaurants = businessList.enumerated().map { (index, business) -> Restaurant in
             let name = business?.name ?? "n/a"
             let id = business?.id ?? "id\(index)"
+            let district = (business?.alias ?? "n/a").components(separatedBy: "-")[1]
             let address = business?.location?.address1 ?? "n/a"
             let coordinate = business?.coordinates
             return Restaurant(
                 id: id,
                 name: name,
-                address: address,
+                address: district + address,
                 latitude: coordinate?.latitude,
                 longitude: coordinate?.longitude
             )
